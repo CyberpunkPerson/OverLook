@@ -1,0 +1,11 @@
+overlook:
+  test:
+    data:
+      correct:
+        name: "correctData"
+        contentType: "application/json"
+        path: "/test-data/correct-data.json"
+      wrong:
+        name: "wrongData"
+        contentType: "application/json"
+        path: "/test-data/wrong-data.json"

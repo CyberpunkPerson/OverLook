@@ -1,0 +1,46 @@
+[
+  {
+    "contactInfo": {
+      "phoneNumbers": [
+        {
+          "phoneNumber": "12345678",
+          "provider": {
+            "name": "MTS"
+          }
+        },
+        {
+          "phoneNumber": "87654321",
+          "provider": {
+            "name": "MTS"
+          }
+        }
+      ],
+      "email": "google@gmail.com"
+    }
+  },
+  {
+    "contactInfo": {
+      "phoneNumbers": [
+        {
+          "phoneNumber": "74562345",
+          "provider": {
+            "name": "Telenor"
+          }
+        },
+        {
+          "phoneNumber": "86786567",
+          "provider": {
+            "name": "Vodafone"
+          }
+        },
+        {
+          "phoneNumber": "45645654",
+          "provider": {
+            "name": "Vodafone"
+          }
+        }
+      ],
+      "email": "google@yandex.ru"
+    }
+  }
+]
