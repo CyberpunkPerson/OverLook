@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -17,6 +18,7 @@ public class User {
     private UUID userId;
 
     //TODO refactor with using of derived id
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_info_id")
     private ContactInfo contactInfo;

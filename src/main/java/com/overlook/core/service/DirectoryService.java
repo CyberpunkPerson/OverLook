@@ -20,8 +20,11 @@ public class DirectoryService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    //TODO Validation in MultipartFile itself
     public List<User> extractUsers(MultipartFile directory) {
         Assert.notNull(directory, "Undefined file was passed for extraction");
+        Assert.notNull(directory.getContentType(), "Content type not specified");
+        Assert.isTrue(directory.getContentType().equals(MediaType.APPLICATION_JSON_VALUE), "JSON format applicable only");
 
         try {
             return objectMapper.readValue(directory.getInputStream(), new TypeReference<List<User>>() {
@@ -31,11 +34,11 @@ public class DirectoryService {
         }
     }
 
-    public MultipartFile writeUsers(List<User> users) {
+    public MultipartFile exportUsers(List<User> users, MediaType contentType) {
         Assert.notNull(users, "Undefined list of users passed for write");
 
         try {
-            return new OverlookMultipartFile(DEFAULT_FILENAME, MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(users));
+            return new OverlookMultipartFile(DEFAULT_FILENAME, contentType.toString(), objectMapper.writeValueAsBytes(users));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(String.format("Write data failed: %s", e.getMessage()));
         }
