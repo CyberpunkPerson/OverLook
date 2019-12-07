@@ -1,16 +1,21 @@
 package com.overlook.core.controller;
 
 import com.overlook.core.domain.user.User;
+import com.overlook.core.reports.UserListReport;
 import com.overlook.core.service.DirectoryService;
+import com.overlook.core.service.PdfReportService;
 import com.overlook.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -21,10 +26,13 @@ public class DirectoryController {
 
     private final DirectoryService directoryService;
 
+    private final PdfReportService pdfReportService;
+
     @Autowired
-    public DirectoryController(UserService userService, DirectoryService directoryService) {
+    public DirectoryController(UserService userService, DirectoryService directoryService, PdfReportService pdfReportService) {
         this.userService = userService;
         this.directoryService = directoryService;
+        this.pdfReportService = pdfReportService;
     }
 
 
@@ -35,4 +43,12 @@ public class DirectoryController {
         return ResponseEntity.ok("Data has been saved");
     }
 
+    @GetMapping(value = "/export/users/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> exportUsersInPdf() {
+        List<User> existUsers = userService.findAll();
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .headers(httpHeaders -> httpHeaders.put("Content-Disposition", Collections.singletonList("inline; filename=somefile.pdf")))
+                .body(pdfReportService.exportReportAsByteArray(new UserListReport(existUsers)));
+    }
 }

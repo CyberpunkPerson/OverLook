@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -16,6 +17,9 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID userId;
+
+    @NotBlank
+    private String name;
 
     //TODO refactor with using of derived id
     @NotNull

@@ -18,10 +18,11 @@ public class PhoneNumber {
     private UUID phoneNumberId;
 
     @NotBlank
+    @Column(unique = true)
     private String phoneNumber;
 
     //TODO Perhaps would be better to rid of this link
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "provider_id")
     private Provider provider;
 }

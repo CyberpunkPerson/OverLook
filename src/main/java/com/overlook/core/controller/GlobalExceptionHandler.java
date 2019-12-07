@@ -1,5 +1,9 @@
-package com.overlook.core.exception;
+package com.overlook.core.controller;
 
+import com.overlook.core.exception.ApiException;
+import com.overlook.core.exception.ReportExportException;
+import lombok.Builder;
+import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,17 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+
+    @ExceptionHandler(ReportExportException.class)
+    public ResponseEntity<ApiException> handleReportExportException(ReportExportException ex,
+                                                                    WebRequest request) {
+        return handleException()
+                .exception(ex)
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiException(ex.getMessage()))
+                .request(request)
+                .build();
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -41,23 +56,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ApiException> handleUndefinedException(Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex,
-                new ApiException(ex.getMessage()),
-                new HttpHeaders(),
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                request);
+        return handleException()
+                .exception(ex)
+                .body(new ApiException(ex.getMessage()))
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .request(request)
+                .build();
+
     }
 
-    private ResponseEntity<ApiException> handleExceptionInternal(Exception ex,
+    @Builder(builderMethodName = "handleException")
+    private ResponseEntity<ApiException> handleExceptionInternal(@NonNull Exception exception,
                                                                  @Nullable ApiException body,
                                                                  HttpHeaders headers,
-                                                                 HttpStatus status,
-                                                                 WebRequest request) {
+                                                                 @NonNull HttpStatus status,
+                                                                 @NonNull WebRequest request) {
 
         if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
-            request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+            request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, exception, WebRequest.SCOPE_REQUEST);
         }
-        ex.printStackTrace();
+        exception.printStackTrace();
         return new ResponseEntity<>(body, headers, status);
     }
 
