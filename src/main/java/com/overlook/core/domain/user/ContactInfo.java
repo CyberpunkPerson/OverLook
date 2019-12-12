@@ -2,6 +2,7 @@ package com.overlook.core.domain.user;
 
 import com.overlook.core.domain.company.PhoneNumber;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,8 @@ import java.util.UUID;
 public class ContactInfo {
 
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID contactInfoId;
 
     @NotEmpty
