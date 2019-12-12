@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <name>OverLook</name>
-    <description>OverLook hostel aggregator</description>
+    <description>OverLook project</description>
 
     <properties>
         <java.version>8</java.version>
