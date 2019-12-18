@@ -16,12 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.UUID;
 
 @Service
-@Validated
 public class UserProfileService implements UserDetailsService {
 
     private final UserProfileRepository userProfileRepository;

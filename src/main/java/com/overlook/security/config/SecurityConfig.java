@@ -1,7 +1,5 @@
-package com.overlook.security;
+package com.overlook.security.config;
 
-import com.overlook.security.config.JwtAuthenticationFilter;
-import com.overlook.security.config.JwtTokenProvider;
 import com.overlook.security.controller.OverLookAuthenticationEntryPoint;
 import com.overlook.security.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserProfileService userProfileService;
-
-    private final OverLookAuthenticationEntryPoint unauthorizedHandler;
-
-    private final JwtTokenProvider tokenProvider;
+    @Autowired
+    private  UserProfileService userProfileService;
 
     @Autowired
-    public SecurityConfig(UserProfileService userProfileService,
-                          OverLookAuthenticationEntryPoint unauthorizedHandler,
-                          JwtTokenProvider tokenProvider) {
-        this.userProfileService = userProfileService;
-        this.unauthorizedHandler = unauthorizedHandler;
-        this.tokenProvider = tokenProvider;
-    }
+    private  OverLookAuthenticationEntryPoint unauthorizedHandler;
+
+    @Autowired
+    private  JwtTokenProvider tokenProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -66,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
         //@formatter:on
     }
 

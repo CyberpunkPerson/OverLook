@@ -1,7 +1,7 @@
-package com.overlook.core.service;
+package com.overlook.test.core.sevice;
 
-import com.overlook.core.OverLookTestContext;
 import com.overlook.core.domain.user.User;
+import com.overlook.core.service.DirectoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = OverLookTestContext.class)
+@SpringBootTest
 public class DirectoryServiceTest {
 
     @Resource(name = "correctData")
