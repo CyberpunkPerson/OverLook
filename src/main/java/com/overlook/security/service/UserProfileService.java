@@ -48,11 +48,11 @@ public class UserProfileService implements UserDetailsService {
 
     @Override
     public UserProfile loadUserByUsername(String username) throws UsernameNotFoundException {
-        Assert.isTrue(StringUtils.isBlank(username), "Username should be defined");
+        Assert.isTrue(!StringUtils.isBlank(username), "Username should be defined");
 
         UserProfile userProfile = userProfileRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("User with name %s was not found", username)
+                        String.format("User with name '%s' was not found", username)
                 ));
 
         if (!userProfile.isAccountNonExpired() || !userProfile.isAccountNonLocked()) {
@@ -68,5 +68,9 @@ public class UserProfileService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("User with id: '%s' was not found", userId)
                 ));
+    }
+
+    public UserProfile save(UserProfile userProfile) {
+        return userProfileRepository.save(userProfile);
     }
 }

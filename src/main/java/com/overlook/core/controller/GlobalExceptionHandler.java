@@ -49,7 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return super.handleExceptionInternal(
                 ex,
-                validationMessages,
+                new ApiException(validationMessages.toString()),
                 headers,
                 HttpStatus.BAD_REQUEST,
                 request);

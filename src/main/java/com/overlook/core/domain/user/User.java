@@ -1,5 +1,6 @@
 package com.overlook.core.domain.user;
 
+import com.overlook.security.domain.UserProfile;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,6 +21,11 @@ public class User {
 
     @NotBlank
     private String name;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserProfile profile;
 
     //TODO refactor with using of derived id
     @NotNull
