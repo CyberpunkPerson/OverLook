@@ -14,8 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,6 +94,15 @@ public class UserService {
 
         return userRepository.findByProfileProfileId(userProfile.getProfileId())
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Profile with %s - id does not exist", userProfile.getProfileId())));
+    }
+
+    @PreAuthorize("hasAuthority('BOOKING_MANAGER')")
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void  changeProvider(PhoneNumber phoneNumber, Provider provider) {
+
+        Assert.isTrue(phoneNumber.getBalance().compareTo(new BigDecimal(100)) >= 0, "Not enough money to change provider");
+
+        phoneNumber.setProvider(provider);
     }
 
     //FIXME Kludge, refactor this
