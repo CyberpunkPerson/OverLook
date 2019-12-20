@@ -1,11 +1,11 @@
-package com.overlook.core;
+package com.overlook;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"com.overlook.core.repository"})
+@EnableJpaRepositories
 public class OverLook {
 
     public static void main(String[] args) {

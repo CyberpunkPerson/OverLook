@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -25,8 +26,13 @@ public class UserController {
         return ResponseEntity.ok("User has been saved");
     }
 
+    @GetMapping("/retrieve")
+    public ResponseEntity<User> retrieveActiveUser() {
+        return ResponseEntity.ok(userService.retrieveActiveUser());
+    }
+
     @GetMapping("/findAll")
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 }

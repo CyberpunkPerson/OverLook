@@ -10,3 +10,8 @@ spring:
 server:
   servlet:
     context-path: /overlook
+
+overlook:
+  security:
+    jwtSecret: 2eA!#]+2l3#$5-
+    jwtExpiration: 3600000

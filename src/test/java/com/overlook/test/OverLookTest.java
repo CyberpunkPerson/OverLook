@@ -1,7 +1,7 @@
-package com.overlook.core;
+package com.overlook.test;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@TestConfiguration
-public class OverLookTestContext {
+@SpringBootApplication
+public class OverLookTest {
 
     @Bean
     public MultipartFile correctData(@Value("${overlook.test.data.correct.name}") String name,

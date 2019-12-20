@@ -1,6 +1,8 @@
 package com.overlook.core.domain.user;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.overlook.core.domain.provider.PhoneNumber;
+import com.overlook.core.utils.PhoneNumberSerializer;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,6 +25,7 @@ public class ContactInfo {
     @NotEmpty
     @PrimaryKeyJoinColumn
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonSerialize(using = PhoneNumberSerializer.class)
     private List<PhoneNumber> phoneNumbers;
 
     @NotBlank

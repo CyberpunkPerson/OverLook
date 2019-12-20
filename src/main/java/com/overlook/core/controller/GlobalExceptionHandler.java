@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,17 +42,28 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   WebRequest request) {
 
         BindingResult bindingResult = ex.getBindingResult();
-        List validationMessages = bindingResult.getFieldErrors().stream()
+        List<String> validationMessages = bindingResult.getFieldErrors().stream()
                 .map(fieldError -> String.format("Wrong value '%s' in field '%s' for object '%s' has been set",
                         fieldError.getRejectedValue(), fieldError.getField(), fieldError.getObjectName()))
                 .collect(Collectors.toList());
 
         return super.handleExceptionInternal(
                 ex,
-                validationMessages,
+                new ApiException(validationMessages.toString()),
                 headers,
-                status,
+                HttpStatus.BAD_REQUEST,
                 request);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiException> handleAuthenticationException(AuthenticationException ex,
+                                                                      WebRequest request) {
+        return handleException()
+        .exception(ex)
+        .status(HttpStatus.FORBIDDEN)
+        .body(new ApiException(ex.getMessage()))
+        .request(request)
+        .build();
     }
 
     @ExceptionHandler

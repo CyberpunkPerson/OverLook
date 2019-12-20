@@ -1,5 +1,15 @@
 [
   {
+    "name": "John",
+    "profile": {
+      "username": "john",
+      "password": "12345678",
+      "authorities": "BOOKING_MANAGER",
+      "accountNonExpired": true,
+      "accountNonLocked": true,
+      "credentialsNonExpired": true,
+      "enabled": true
+    },
     "contactInfo": {
       "phoneNumbers": [
         {
@@ -19,6 +29,16 @@
     }
   },
   {
+    "name": "Snow",
+    "profile": {
+      "username": "snow",
+      "password": "123123123",
+      "authorities": "REGISTERED_USER",
+      "accountNonExpired": true,
+      "accountNonLocked": true,
+      "credentialsNonExpired": true,
+      "enabled": true
+    },
     "contactInfo": {
       "phoneNumbers": [
         {

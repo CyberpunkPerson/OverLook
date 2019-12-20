@@ -3,11 +3,13 @@ package com.overlook.core.service;
 import com.overlook.core.domain.provider.Provider;
 import com.overlook.core.repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@PreAuthorize("hasAuthority('BOOKING_MANAGER')")
 public class ProviderService {
 
     private final ProviderRepository providerRepository;
