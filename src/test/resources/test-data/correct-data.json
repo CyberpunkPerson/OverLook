@@ -4,11 +4,11 @@
     "profile": {
       "username": "john",
       "password": "12345678",
-      "authority": "BOOKING_MANAGER",
+      "authorities": "BOOKING_MANAGER",
       "accountNonExpired": true,
       "accountNonLocked": true,
       "credentialsNonExpired": true,
-      "enable": true
+      "enabled": true
     },
     "contactInfo": {
       "phoneNumbers": [
@@ -33,11 +33,11 @@
     "profile": {
       "username": "snow",
       "password": "123123123",
-      "authority": "REGISTERED_USER",
+      "authorities": "REGISTERED_USER",
       "accountNonExpired": true,
       "accountNonLocked": true,
       "credentialsNonExpired": true,
-      "enable": true
+      "enabled": true
     },
     "contactInfo": {
       "phoneNumbers": [

@@ -24,7 +24,7 @@ public class User {
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "profile_id")
     private UserProfile profile;
 
     //TODO refactor with using of derived id

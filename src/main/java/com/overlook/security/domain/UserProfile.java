@@ -1,5 +1,6 @@
 package com.overlook.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,14 +24,15 @@ public class UserProfile implements UserDetails {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID userId;
+    private UUID profileId;
 
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
-    private ProfileRole authority;
+    private ProfileRole authorities;
 
     private boolean accountNonExpired;
 
@@ -38,11 +40,11 @@ public class UserProfile implements UserDetails {
 
     private boolean credentialsNonExpired;
 
-    private boolean enable;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(authority.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(authorities.name()));
     }
 
     @Override
@@ -62,6 +64,6 @@ public class UserProfile implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }

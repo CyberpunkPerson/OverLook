@@ -1,8 +1,6 @@
 package com.overlook.security.config;
 
 import com.overlook.security.controller.OverLookAuthenticationEntryPoint;
-import com.overlook.security.domain.ProfileRole;
-import com.overlook.security.domain.UserProfile;
 import com.overlook.security.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.annotation.PostConstruct;
-import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
@@ -39,21 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtTokenProvider tokenProvider;
-
-    @PostConstruct
-    public void init() {
-        UserProfile userProfile = new UserProfile();
-        userProfile.setUserId(UUID.randomUUID());
-        userProfile.setUsername("admin");
-        userProfile.setPassword(bcryptPasswordEncoder().encode("12345678"));
-        userProfile.setAccountNonExpired(true);
-        userProfile.setAccountNonLocked(true);
-        userProfile.setAuthority(ProfileRole.BOOKING_MANAGER);
-        userProfile.setEnable(true);
-        userProfile.setCredentialsNonExpired(true);
-
-        userProfileService.save(userProfile);
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -83,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js").permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/signin").permitAll()
                 .anyRequest().authenticated();
         //@formatter:on
     }

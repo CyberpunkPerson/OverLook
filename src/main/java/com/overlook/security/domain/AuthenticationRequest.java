@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class AuthenticationRequest {
 
     @NotBlank(message = "Username should be defined")
-    @Size(min = 5, max = 50)
+    @Size(min = 4, max = 50)
     private String username;
 
     @NotBlank(message = "Password should be defined")

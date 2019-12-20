@@ -64,7 +64,7 @@ public class UserProfileService implements UserDetailsService {
 
     public UserDetails loadUserById(UUID userId) {
         Assert.notNull(userId, "Undefined user id has been passed");
-        return userProfileRepository.findByUserId(userId)
+        return userProfileRepository.findByProfileId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("User with id: '%s' was not found", userId)
                 ));
